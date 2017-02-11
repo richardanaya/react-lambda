@@ -1,6 +1,7 @@
 const awsServerlessExpress = require('aws-serverless-express');
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 require('dotenv').config();
@@ -17,7 +18,7 @@ app.get('/secret', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-  res.sendFile(`${__dirname}/public/index.html`);
+  res.sendFile(path.resolve('public/index.html'));
 });
 
 if (process.env.LOCAL_DEVELOPMENT === 'true') {
