@@ -9,7 +9,7 @@ npm run start
 
 To build:
 ```bash
-npm run start
+npm run build
 ```
 
 To deploy:
