@@ -1,6 +1,6 @@
 # lambda-site
 
-An uber minimalistic setup for hosting a website on AWS lambda
+An uber minimalistic setup for hosting a website on a single AWS lambda with express and static files.
 
 To setup:
 ```bash
