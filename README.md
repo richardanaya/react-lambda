@@ -2,6 +2,11 @@
 
 An uber minimalistic setup for hosting a website on AWS lambda
 
+To setup:
+```bash
+npm install
+```
+
 To run:
 ```bash
 npm run start
