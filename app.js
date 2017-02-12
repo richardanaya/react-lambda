@@ -46,6 +46,9 @@ function renderFullPage(html, preloadedState) {
   <html>
     <head>
       <title>Counter</title>
+      <meta name="theme-color" content="#000000">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="manifest" href="/public/manifest.json">
     </head>
     <body>
     ${html}

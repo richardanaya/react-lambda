@@ -1,0 +1,24 @@
+{
+  "short_name": "App",
+  "name": "A description of the app.",
+  "start_url": "",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "public/app-icon-1x.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "public/app-icon-2x.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "public/app-icon-1x.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ]
+}
