@@ -1,13 +1,13 @@
 const path = require('path');
-const webpack = require('webpack');
+
 module.exports = {
-  target: "node",
+  target: 'node',
   context: path.resolve(__dirname),
   entry: {
     app: './app.js',
   },
   output: {
-    libraryTarget: "commonjs",
+    libraryTarget: 'commonjs',
     path: path.resolve(__dirname, './dist'),
     filename: 'index.js',
   },
@@ -17,11 +17,9 @@ module.exports = {
         test: /\.js$/,
         use: [{
           loader: 'babel-loader',
-          options: { presets: ['es2015'] }
+          options: { presets: ['es2015', 'react'] },
         }],
-      }
-
-      // Loaders for other file types can go here
-    ]
-  }
+      },
+    ],
+  },
 };
