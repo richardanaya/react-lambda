@@ -46,6 +46,7 @@ function renderFullPage(html, preloadedState) {
   <html>
     <head>
       <title>Counter</title>
+      <link rel="icon" href="public/favicon.png" type="image/png" sizes="16x16 32x32"> 
       <meta name="theme-color" content="#000000">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="manifest" href="/public/manifest.json">
