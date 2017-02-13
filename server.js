@@ -7,6 +7,7 @@ import awsServerlessExpressMiddleware from 'aws-serverless-express/middleware';
 import express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
+import path from 'path';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import App from './components/App';
@@ -58,11 +59,24 @@ function renderFullPage(html, preloadedState) {
             }
         }
         loadStyleSheet('public/app.css');
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', function() {
+            navigator.serviceWorker.register('serviceworker.js').then(function(registration) {
+              console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }).catch(function(err) {
+              console.log('ServiceWorker registration failed: ', err);
+            });
+          });
+        }
     </script>
     <script src="/public/bundle.js"></script>
   </html>
   `;
 }
+
+app.get('/serviceworker.js', (req, res) => {
+  res.sendFile(path.resolve('public/serviceworker.js'));
+});
 
 app.get('*', (req, res) => {
   logger.log('hey');
