@@ -1,10 +1,10 @@
 const path = require('path');
 
-module.exports = {
+module.exports = [{
   target: 'node',
   context: path.resolve(__dirname),
   entry: {
-    app: './app.js',
+    app: './server.js',
   },
   output: {
     libraryTarget: 'commonjs',
@@ -22,4 +22,24 @@ module.exports = {
       },
     ],
   },
-};
+}, {
+  context: path.resolve(__dirname),
+  entry: {
+    app: './client.js',
+  },
+  output: {
+    path: path.resolve(__dirname, './public'),
+    filename: 'bundle.js',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: [{
+          loader: 'babel-loader',
+          options: { presets: ['es2015', 'react'] },
+        }],
+      },
+    ],
+  },
+}];

@@ -10,6 +10,7 @@ import dotenv from 'dotenv';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import App from './components/App';
+import counter from './reducers';
 
 dotenv.config();
 const LOCAL_DEVELOPMENT = process.env.LOCAL_DEVELOPMENT === 'true';
@@ -28,35 +29,26 @@ app.get('/secret', (req, res) => {
   res.json([1, 2, 3]);
 });
 
-function counter(state = 0, action) {
-  switch (action.type) {
-    case 'INCREMENT':
-      return state + 1;
-    case 'DECREMENT':
-      return state - 1;
-    default:
-      return state;
-  }
-}
-
 const store = createStore(counter);
 
 function renderFullPage(html, preloadedState) {
   return `
+  <!doctype html>
   <html>
     <head>
       <title>Counter</title>
-      <link rel="icon" href="public/favicon.png" type="image/png" sizes="16x16 32x32"> 
+      <link rel="icon" href="public/favicon.png" type="image/png" sizes="16x16 32x32">
       <meta name="theme-color" content="#000000">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="manifest" href="/public/manifest.json">
     </head>
     <body>
-    ${html}
+    <div id="root">${html}</div>
     <body>
     <script>
-      var PRELOADED_STATE = ${JSON.stringify(preloadedState)};
+      window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)};
     </script>
+    <script src="/public/bundle.js"></script>
   </html>
   `;
 }

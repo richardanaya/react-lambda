@@ -3,3 +3,4 @@ dist
 *.log
 .gitignore
 .env
+bundle.js

@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "rm -rf dist/public && cp -R public dist/public && webpack -p",
+    "build": "webpack -p && rm -rf dist/public && cp -R public dist/public",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev:webpack-watch": "webpack --watch --colors",
     "dev:run": "nodemon dist/index.js",
