@@ -4,4 +4,4 @@ const app = trapezoid();
 
 app.precache('/');
 
-app.run('helloworld-v1');
+app.run('app-cache-v1');
