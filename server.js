@@ -12,6 +12,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import App from './components/App';
 import counter from './reducers';
+const styleCSS = require('raw-loader!./styles/app.css');
 
 dotenv.config();
 const LOCAL_DEVELOPMENT = process.env.LOCAL_DEVELOPMENT === 'true';
@@ -30,8 +31,6 @@ app.get('/secret', (req, res) => {
   res.json([1, 2, 3]);
 });
 
-const store = createStore(counter);
-
 function renderFullPage(html, preloadedState) {
   return `
   <!doctype html>
@@ -42,44 +41,57 @@ function renderFullPage(html, preloadedState) {
       <meta name="theme-color" content="#000000">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="manifest" href="/public/manifest.json">
+      <style>
+        ${styleCSS}
+      </style>
     </head>
     <body>
     <div id="root">${html}</div>
-    <body>
+    </body>
     <script>
       window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)};
-      function loadStyleSheet(src){
-            if (document.createStyleSheet) document.createStyleSheet(src);
-            else {
-                var stylesheet = document.createElement('link');
-                stylesheet.href = src;
-                stylesheet.rel = 'stylesheet';
-                stylesheet.type = 'text/css';
-                document.getElementsByTagName('head')[0].appendChild(stylesheet);
-            }
-        }
-        loadStyleSheet('public/app.css');
-        if ('serviceWorker' in navigator) {
-          window.addEventListener('load', function() {
-            navigator.serviceWorker.register('serviceworker.js').then(function(registration) {
-              console.log('ServiceWorker registration successful with scope: ', registration.scope);
-            }).catch(function(err) {
-              console.log('ServiceWorker registration failed: ', err);
-            });
-          });
-        }
     </script>
-    <script src="/public/bundle.js"></script>
+    <script src="/public/bundle.js" async></script>
   </html>
   `;
 }
 
+
 app.get('/serviceworker.js', (req, res) => {
-  res.sendFile(path.resolve('public/serviceworker.js'));
+  const store = createStore(counter);
+  const html = renderToString(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+ );
+  const preloadedState = store.getState();
+  const fullHtml = renderFullPage(html, preloadedState);
+  res.setHeader('cache-control', 'no-cache');
+  res.setHeader('content-type', 'text/javascript');
+  res.send(`
+      importScripts("https://cdn.rawgit.com/sigiljs/trapezoid/fdcef301/trapezoid.min.js");
+      const app = trapezoid();
+      //precache our dependencies
+      app.precache([
+        '/public/bundle.js',
+        '/public/favicon.png'
+      ]);
+      //these routes always use the cache
+      app.useCache('/public/bundle.js');
+      app.useCache('/public/favicon.png');
+      //these routes will use offline response only when fetch fails
+      app.offline('/', (req, res) => {
+        res.send(\`
+            ${fullHtml}
+          \`
+        );
+      });
+      app.run('app-cache-v1');
+    `);
 });
 
 app.get('*', (req, res) => {
-  logger.log('hey');
+  const store = createStore(counter);
   const html = renderToString(
     <Provider store={store}>
       <App />
