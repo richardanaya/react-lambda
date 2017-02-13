@@ -47,6 +47,17 @@ function renderFullPage(html, preloadedState) {
     <body>
     <script>
       window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)};
+      function loadStyleSheet(src){
+            if (document.createStyleSheet) document.createStyleSheet(src);
+            else {
+                var stylesheet = document.createElement('link');
+                stylesheet.href = src;
+                stylesheet.rel = 'stylesheet';
+                stylesheet.type = 'text/css';
+                document.getElementsByTagName('head')[0].appendChild(stylesheet);
+            }
+        }
+        loadStyleSheet('public/app.css');
     </script>
     <script src="/public/bundle.js"></script>
   </html>
