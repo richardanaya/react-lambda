@@ -1,5 +1,7 @@
-import sigil from 'sigiljs';
+var HelloWorldProto = Object.create(HTMLElement.prototype);
 
-sigil('hello-world',{
-  template: "blah123!"
-});
+HelloWorldProto.createdCallback = function() {
+  this.innerHTML = "<div>Hello World!</div>";
+};
+
+document.registerElement('hello-world', {prototype: HelloWorldProto});
