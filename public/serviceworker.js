@@ -3,10 +3,8 @@ const app = trapezoid();
 //precache our dependencies
 app.precache([
   '/',
-  '/public/bundle.js',
-  '/public/favicon.png'
+  '/public/app.bundle.js'
 ]);
 app.useCache('/');
-app.useCache('/public/bundle.js');
-app.useCache('/public/favicon.png');
+app.useCache('/public/app.bundle.js');
 app.run('app-cache-v1');

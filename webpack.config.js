@@ -29,25 +29,16 @@ module.exports = [{
   },
   output: {
     path: path.resolve(__dirname, './public'),
-    filename: 'bundle.js',
+    filename: 'app.bundle.js',
   },
   module: {
     rules: [
-      {
-        test: /\.html$/,
-        use: [{
-          loader: 'babel-loader',
-          options: { presets: ['es2015', 'react'] },
-        },{
-          loader: 'wc-loader'
-        }]
-      },
       { test: /\.css$/, loader: 'style-loader!css-loader' },
       {
         test: /\.js$/,
         use: [{
           loader: 'babel-loader',
-          options: { presets: ['es2015', 'react'] },
+          options: { presets: ['es2015'] },
         }],
       },
     ],
