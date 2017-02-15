@@ -4,7 +4,7 @@ module.exports = [{
   target: 'node',
   context: path.resolve(__dirname),
   entry: {
-    app: './server.js',
+    app: './src/server.js',
   },
   output: {
     libraryTarget: 'commonjs',
@@ -17,7 +17,7 @@ module.exports = [{
         test: /\.js$/,
         use: [{
           loader: 'babel-loader',
-          options: { presets: ['es2015', 'react'] },
+          options: { presets: ['es2015'] },
         }],
       },
     ],
@@ -25,7 +25,7 @@ module.exports = [{
 }, {
   context: path.resolve(__dirname),
   entry: {
-    app: './client.js',
+    app: './src/client.js',
   },
   output: {
     path: path.resolve(__dirname, './public'),
@@ -33,7 +33,16 @@ module.exports = [{
   },
   module: {
     rules: [
-       { test: /\.css$/, loader: 'style-loader!css-loader' },
+      {
+        test: /\.html$/,
+        use: [{
+          loader: 'babel-loader',
+          options: { presets: ['es2015', 'react'] },
+        },{
+          loader: 'wc-loader'
+        }]
+      },
+      { test: /\.css$/, loader: 'style-loader!css-loader' },
       {
         test: /\.js$/,
         use: [{
