@@ -1,4 +1,4 @@
-importScripts("https://cdn.rawgit.com/sigiljs/trapezoid/fdcef301/trapezoid.min.js");
+importScripts("https://cdn.jsdelivr.net/gh/sigiljs/trapezoid@fdcef301/trapezoid.min.js");
 const app = trapezoid();
 //precache our dependencies
 app.precache([
